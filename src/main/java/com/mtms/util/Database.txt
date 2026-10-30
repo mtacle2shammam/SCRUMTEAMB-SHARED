@@ -1,0 +1,22 @@
+-- Creating tracks table with constraint
+-- DROP TABLE tracks CASCADE ;
+CREATE TABLE tracks (
+	track_id BIGSERIAL PRIMARY KEY,
+	track_number VARCHAR(20) NOT NULL CHECK(CHAR_LENGTH(track_number) > 4),
+	latitude NUMERIC(10,6) NOT NULL CHECK(latitude>= -90 AND latitude<= 90),
+	longtitude NUMERIC(10,6) NOT NULL CHECK(longtitude>= -180 AND longtitude<= 180),
+	speed NUMERIC(10,2) NOT NULL CHECK(speed> 0 AND speed<= 2000),
+	identity_type VARCHAR(20) NOT NULL CHECK(identity_type IN ('FRIEND', 'HOSTILE' ,'NEUTRAL', 'UNKNOWN')),
+	track_status VARCHAR(20) NOT NULL CHECK(track_status IN ('ACTIVE', 'INACTIVE')),
+	created_time TIMESTAMP NOT NULL
+);
+
+-- Creating alerts table with constraint
+-- DROP TABLE alerts CASCADE ;
+CREATE TABLE alerts (
+	alert_id BIGSERIAL PRIMARY KEY,
+	track_number VARCHAR(20),
+	alert_message VARCHAR(500) NOT NULL,
+	alert_severity VARCHAR(20) NOT NULL CHECK(alert_severity IN ('LOW', 'MEDIUM' ,'HIGH')),
+	alert_time TIMESTAMP NOT NULL
+);
